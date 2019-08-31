@@ -1,26 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import Body from "./Body.js";
+import axios from 'axios';
+import styled from 'styled-components';
+import Body from './Body.js'
 
-// import styled from "styled-components";
+
+const Button = styled.button`
+padding: 10px;
+color: white
+background: black;
+border: 1px solid #ffffff;
+`;
+const img = 'http://loodibee.com/wp-content/uploads/Star-Wars-transparent-logo.png';
+
+function App() {
+  const [count, setCount] = useState(1);
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://swapi.co/api/people/")
+    .then(res => {
+      setPeople(res.data.results);
+      console.log(res.data)
+    });
+  }, []);
+  // pagination - stretch
+  useEffect(() => {
+    axios.get(`https://swapi.co/api/people/?page=${count}`)
+    .then(res => {
+      setPeople(res.data.results);
+    });
+  }, [count]);
 
 
-const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
-
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
-      <Body />
 
-    
+ <div>
+  
+  <img src={img} width="400px" height="270px" /> 
+
+ </div>
+
+    <Body people={people} />
+      
     </div>
   );
 }
+
 
 export default App;
