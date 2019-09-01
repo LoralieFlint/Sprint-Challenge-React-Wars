@@ -1,53 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import axios from 'axios';
-import styled from 'styled-components';
-import Body from './Body.js'
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+import Body from "./Body.js";
 
-
-const Button = styled.button`
-padding: 10px;
-color: white
-background: black;
-border: 1px solid #ffffff;
-`;
-const img = 'http://loodibee.com/wp-content/uploads/Star-Wars-transparent-logo.png';
+const img =
+  "http://loodibee.com/wp-content/uploads/Star-Wars-transparent-logo.png";
 
 function App() {
-  const [count, setCount] = useState(1);
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
-    axios.get("https://swapi.co/api/people/")
-    .then(res => {
+    axios.get("https://swapi.co/api/people/").then(res => {
       setPeople(res.data.results);
-      console.log(res.data)
+      console.log(res.data);
     });
   }, []);
-  // pagination - stretch
+
   useEffect(() => {
-    axios.get(`https://swapi.co/api/people/?page=${count}`)
-    .then(res => {
+    axios.get(`https://swapi.co/api/people/`).then(res => {
       setPeople(res.data.results);
     });
-  }, [count]);
-
-
+  }, []);
 
   return (
     <div className="App">
+      <div>
+        <img
+          className="background"
+          src={img}
+          alt="Star Wars background"
+          width="300px"
+          height="170px"
+          marginTop="-800px"
+        />
+      </div>
 
- <div>
-  
-  <img src={img} width="400px" height="270px" /> 
-
- </div>
-
-    <Body people={people} />
-      
+      <Body people={people} />
     </div>
   );
 }
-
 
 export default App;

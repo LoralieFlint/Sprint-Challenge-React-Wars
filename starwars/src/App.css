@@ -8,11 +8,13 @@
   text-shadow: 1px 1px 5px #fff;
 }
 /* write your parent styles in here for your App.js */
-    
+
 div.divs {
   display: inline-block;
-
 }
 img {
   width: 100%;
+}
+.background {
+  margin-top: -50px;
 }
