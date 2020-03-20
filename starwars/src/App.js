@@ -1,17 +1,41 @@
-import React from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import axios from "axios";
+import Body from "./Body.js";
 
-const App = () => {
-  // Try to think through what state you'll need for this app before starting. Then build out
-  // the state properties here.
+const img =
+  "http://loodibee.com/wp-content/uploads/Star-Wars-transparent-logo.png";
 
-  // Fetch characters from the star wars api in an effect hook. Remember, anytime you have a 
-  // side effect in a component, you want to think about which state and/or props it should
-  // sync up with, if any.
+function App() {
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://swapi.co/api/people/").then(res => {
+      setPeople(res.data.results);
+      console.log(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    axios.get(`https://swapi.co/api/people/`).then(res => {
+      setPeople(res.data.results);
+    });
+  }, []);
 
   return (
     <div className="App">
-      <h1 className="Header">React Wars</h1>
+      <div>
+        <img
+          className="background"
+          src={img}
+          alt="Star Wars background"
+          width="300px"
+          height="170px"
+          marginTop="-800px"
+        />
+      </div>
+
+      <Body people={people} />
     </div>
   );
 }
